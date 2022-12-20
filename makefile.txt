@@ -1,0 +1,50 @@
+#makefile du dossier reseau
+
+Pl=../liste/
+Ph=../hachage/
+Pa=../arbre/
+Pch=../../chaine/
+
+DEPS=$(Pl)Reseau.h $(Pa)ArbreQuat.h $(Ph)Hachage.h $(Pch)Chaine.h ../../SVGwriter.h
+
+CC=gcc 
+CFLAGS=-g -Wall -Wextra -lm
+
+PROGS=
+
+OBJS=Reseau.o ArbreQuat.o Hachage.o ReconstitueReseau.o Chaine.o SVGwriter.o 
+
+ReconstitueReseau: $(OBJS) $(DEPS)
+	$(CC) -o $@ $^ $(CFLAGS)
+
+ArbreQuat.o:  $(OBJS) 
+	$(CC) -o $@ $^ $(CFLAGS)
+
+Reseau.o: $(OBJS) 
+	$(CC) -o $@ $^ $(CFLAGS)
+
+Hachage.o: $(OBJS) 
+	$(CC) -o $@ $^ $(CFLAGS)
+
+Chaine.o: $(OBJS) 
+	$(CC) -o $@ $^ $(CFLAGS)
+
+SVGwriter.o: $(OBJS) ../../SVGwriter.h
+	$(CC) -o $@ $^ $(CFLAGS)
+
+all:
+    +$(MAKE) -C part1
+    +$(MAKE) -C part2
+    +$(MAKE) -C part3
+
+all: $(PROGS)
+
+clean:
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -f $(PROGS)
+
+re: fclean all
+
+.PHONY: clean flcean re all
